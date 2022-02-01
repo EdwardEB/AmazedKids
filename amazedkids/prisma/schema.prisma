@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model products {
+model product {
   rid_product  Int     @id @default(autoincrement())
   rid_category Int?
   productname  String? @db.Citext
