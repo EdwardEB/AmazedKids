@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from 'react';
-import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
+import { AppShell, Burger, Button, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
 
 function Demo() {
   const [opened, setOpened] = useState(false);
@@ -24,7 +24,7 @@ function Demo() {
           // viewport size > theme.breakpoints.lg – width is 400px
           width={{ sm: 300, lg: 400 }}
         >
-          <Text>Application navbar</Text>
+          <Button onClick={()=>{window.location = '/product'}}>Products</Button>
         </Navbar>
       }
       header={
