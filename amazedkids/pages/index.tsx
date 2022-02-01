@@ -1,54 +1,54 @@
-import React from "react"
-import { GetStaticProps } from "next"
-import Layout from "../components/Layout"
-import Post, { PostProps } from "../components/Post"
-import prisma from '../lib/prisma';
+import React from "react";
+import { useState } from 'react';
+import { AppShell, Burger, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
 
-export const getStaticProps: GetStaticProps = async () => {
-  // const feed = await prisma.products.findMany({
-  //   where: { published: true },
-  //   include: {
-  //     author: {
-  //       select: { name: true },
-  //     },
-  //   },
-  // });
-  // return { props: { feed } };
-  const countRecords = await prisma.products.count()
+function Demo() {
+  const [opened, setOpened] = useState(false);
+  const theme = useMantineTheme();
 
-  return { props: { countRecords } };
-};
-
-const Blog: React.FC<Props> = (props) => {
   return (
-    <Layout>
-      <div className="page">
-        <h1>Public Feed</h1>
-        <main>
-          {/* {props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
-            </div>
-          ))} */}
-          Records {props.countRecords}
-        </main>
-      </div>
-      <style jsx>{`
-        .post {
-          background: white;
-          transition: box-shadow 0.1s ease-in;
-        }
+    <AppShell
+      // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
+      navbarOffsetBreakpoint="sm"
+      // fixed prop on AppShell will be automatically added to Header and Navbar
+      fixed
+      navbar={
+        <Navbar
+          padding="md"
+          // Breakpoint at which navbar will be hidden if hidden prop is true
+          hiddenBreakpoint="sm"
+          // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
+          hidden={!opened}
+          // when viewport size is less than theme.breakpoints.sm navbar width is 100%
+          // viewport size > theme.breakpoints.sm – width is 300px
+          // viewport size > theme.breakpoints.lg – width is 400px
+          width={{ sm: 300, lg: 400 }}
+        >
+          <Text>Application navbar</Text>
+        </Navbar>
+      }
+      header={
+        <Header height={70} padding="md">
+          {/* Handle other responsive styles with MediaQuery component or createStyles function */}
+          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                size="sm"
+                color={theme.colors.gray[6]}
+                mr="xl"
+              />
+            </MediaQuery>
 
-        .post:hover {
-          box-shadow: 1px 1px 3px #aaa;
-        }
-
-        .post + .post {
-          margin-top: 2rem;
-        }
-      `}</style>
-    </Layout>
-  )
+            <Text>Application header</Text>
+          </div>
+        </Header>
+      }
+    >
+      <Text>Resize app to see responsive navbar in action</Text>
+    </AppShell>
+  );
 }
 
-export default Blog
+export default Demo;
