@@ -12,7 +12,7 @@ export const getStaticProps: GetStaticProps = async () => {
   }
 }
 
-const Products : React.FC<Props> = (props) => {
+const Products = (props )=> {
 
   // useEffect(() => {
   //   fetch('api/product')
