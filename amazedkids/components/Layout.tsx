@@ -1,13 +1,37 @@
-import React from "react";
+import React, { CSSProperties } from "react";
 import { useState } from 'react';
-import { AppShell, Burger, Button, Header, MediaQuery, Navbar, Text, useMantineTheme } from '@mantine/core';
+
+import {
+  ActionIcon,
+  AppShell,
+  Burger,
+  Button,
+  Col,
+  Group,
+  Header,
+  MantineProvider,
+  MediaQuery,
+  Navbar, Paper,
+  Text,
+} from '@mantine/core';
+
+import { useLocalStorageValue } from '@mantine/hooks';
+
+import {MdDarkMode, MdOutlineDarkMode} from "react-icons/md"
+
 import Link from 'next/link';
+import { EZDiv } from "./EZDiv";
+
+const buttonStyle : CSSProperties = {position : "absolute", right : "0px", top : "0px", zIndex : 100}
 
 function Layout(props) {
   const [opened, setOpened] = useState(false);
-  const theme = useMantineTheme();
+  const [theme, setTheme] = useLocalStorageValue<"light" | "dark">({ key: 'color-scheme', defaultValue: 'light' });
+
+
 
   return (
+    <MantineProvider theme={{ colorScheme: theme }}>
       <AppShell
         // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
         navbarOffsetBreakpoint="sm"
@@ -25,28 +49,24 @@ function Layout(props) {
             // viewport size > theme.breakpoints.lg – width is 400px
             width={{ sm: 300, lg: 400 }}
           >
-            <ul>
-              <li>
-                <Link href="/">
-                  <a>Home</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/products">
-                  <a>Products</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/contactus">
-                  <a>Contact Us</a>
-                </Link>
-              </li>
-              <li>
-                <Link href="/aboutus">
-                  <a>About Us</a>
-                </Link>
-              </li>
-            </ul>
+            <Paper>
+              <Group position="center">
+                <EZDiv display={"flex"} flexDirection="column" rowGap={"15px"}>
+                  <Link href="/">
+                    <Button variant="outline">Home</Button>
+                  </Link>
+                  <Link href="/products">
+                    <Button variant="outline">Products</Button>
+                  </Link>
+                  <Link href="/contactus">
+                    <Button variant="outline">Contact Us</Button>
+                  </Link>
+                  <Link href="/aboutus">
+                    <Button variant="outline">About Us</Button>
+                  </Link>
+                </EZDiv>
+              </Group>
+            </Paper>
           </Navbar>
         }
         header={
@@ -58,22 +78,34 @@ function Layout(props) {
                   opened={opened}
                   onClick={() => setOpened((o) => !o)}
                   size="sm"
-                  color={theme.colors.gray[6]}
+                  // color={theme.colors.gray[6]}
                   mr="xl"
                 />
               </MediaQuery>
 
               <Text>Application header</Text>
             </div>
+            <div>
+              <ActionIcon
+                style={buttonStyle}
+                onClick={()=>{setTheme(theme == "dark" ? "light" : "dark")}}
+              >
+                {theme == "dark" && <MdDarkMode />}
+                {theme == "light" && <MdOutlineDarkMode />}
+              </ActionIcon>
+            </div>
           </Header>
         }
       >
-        {props.children}
+        <Paper>
+          {props.children}
+        </Paper>
       </AppShell>
-    );
-  }
+    </MantineProvider>
+  );
+}
 
-  export default Layout;
+export default Layout;
 // import React, { ReactNode } from "react";
 // import Header from "./Header";
 
