@@ -244,9 +244,14 @@
   "resolved" "https://registry.npmjs.org/@next/env/-/env-12.0.10.tgz"
   "version" "12.0.10"
 
-"@next/swc-win32-x64-msvc@12.0.10":
-  "integrity" "sha512-oUIWRKd24jFLRWUYO1CZmML5+32BcpVfqhimGaaZIXcOkfQW+iqiAzdqsv688zaGtyKGeB9ZtiK3NDf+Q0v+Vw=="
-  "resolved" "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-12.0.10.tgz"
+"@next/swc-linux-x64-gnu@12.0.10":
+  "integrity" "sha512-c79PcfWtyThiYRa1+3KVfDq0zXaI8o1d6dQWNVqDrtLz5HKM/rbjLdvoNuxDwUeZhxI/d9CtyH6GbuKPw5l/5A=="
+  "resolved" "https://registry.npmjs.org/@next/swc-linux-x64-gnu/-/swc-linux-x64-gnu-12.0.10.tgz"
+  "version" "12.0.10"
+
+"@next/swc-linux-x64-musl@12.0.10":
+  "integrity" "sha512-g/scgn+21/MLfizOCZOZt+MxNj2/8Tdlwjvy+QZcSUPZRUI2Y5o3HwBvI1f/bSci+NGRU+bUAO0NFtRJ9MzH5w=="
+  "resolved" "https://registry.npmjs.org/@next/swc-linux-x64-musl/-/swc-linux-x64-musl-12.0.10.tgz"
   "version" "12.0.10"
 
 "@panva/asn1.js@^1.0.0":
@@ -1094,7 +1099,7 @@
   "resolved" "https://registry.npmjs.org/ramda/-/ramda-0.27.1.tgz"
   "version" "0.27.1"
 
-"react-dom@^15.0.0 || ^16.0.0 || ^17.0.0", "react-dom@^17.0.2 || ^18.0.0-0", "react-dom@>=16.8", "react-dom@>=16.8.0", "react-dom@16.14.0":
+"react-dom@^15.0.0 || ^16.0.0 || ^17.0.0", "react-dom@^15.3.0 || ^16.0.0-alpha || ^17.0.0", "react-dom@^17.0.2 || ^18.0.0-0", "react-dom@>=16.8", "react-dom@>=16.8.0", "react-dom@16.14.0":
   "integrity" "sha512-1gCeQXDLoIqMgqD3IO2Ah9bnf0w9kzhwN5q4FGnHZ67hBm9yePzB5JJAIQCc8x3pFnNlwFq4RidZggNAAkzWWw=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-16.14.0.tgz"
   "version" "16.14.0"
@@ -1167,6 +1172,11 @@
     "use-composed-ref" "^1.0.0"
     "use-latest" "^1.0.0"
 
+"react-virtualized-auto-sizer@^1.0.6":
+  "integrity" "sha512-7tQ0BmZqfVF6YYEWcIGuoR3OdYe8I/ZFbNclFlGOC3pMqunkYF/oL30NCjSGl9sMEb17AnzixDz98Kqc3N76HQ=="
+  "resolved" "http://odin.bitechsystems.co.za:4873/react-virtualized-auto-sizer/-/react-virtualized-auto-sizer-1.0.6.tgz"
+  "version" "1.0.6"
+
 "react-window@^1.8.6":
   "integrity" "sha512-8VwEEYyjz6DCnGBsd+MgkD0KJ2/OXFULyDtorIiTz+QzwoP94tBoA7CnbtyXMm+cCeAUER5KJcPtWl9cpKbOBg=="
   "resolved" "http://odin.bitechsystems.co.za:4873/react-window/-/react-window-1.8.6.tgz"
@@ -1175,7 +1185,7 @@
     "@babel/runtime" "^7.0.0"
     "memoize-one" ">=3.1.1 <6"
 
-"react@*", "react@^15.0.0 || ^16.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16.0 || ^17.0", "react@^16.14.0", "react@^16.8 || ^17.0", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^17.0.2 || ^18.0.0-0", "react@>= 16.8.0 || 17.x.x || 18.x.x", "react@>=16.8", "react@>=16.8.0":
+"react@*", "react@^15.0.0 || ^16.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0", "react@^15.3.0 || ^16.0.0-alpha || ^17.0.0", "react@^16.0 || ^17.0", "react@^16.14.0", "react@^16.8 || ^17.0", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^17.0.2 || ^18.0.0-0", "react@>= 16.8.0 || 17.x.x || 18.x.x", "react@>=16.8", "react@>=16.8.0":
   "integrity" "sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g=="
   "resolved" "https://registry.npmjs.org/react/-/react-16.14.0.tgz"
   "version" "16.14.0"
