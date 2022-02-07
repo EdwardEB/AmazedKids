@@ -2,11 +2,9 @@ import React, { CSSProperties } from "react";
 import { useState } from 'react';
 
 import {
-  ActionIcon,
   AppShell,
   Burger,
   Button,
-  Col,
   Group,
   Header,
   MantineProvider,
@@ -15,93 +13,76 @@ import {
   Text,
 } from '@mantine/core';
 
-import { useLocalStorageValue } from '@mantine/hooks';
-
-import {MdDarkMode, MdOutlineDarkMode} from "react-icons/md"
-
 import Link from 'next/link';
 import { EZDiv } from "./EZDiv";
 
-const buttonStyle : CSSProperties = {position : "absolute", right : "0px", top : "0px", zIndex : 100}
 
 function Layout(props) {
   const [opened, setOpened] = useState(false);
-  const [theme, setTheme] = useLocalStorageValue<"light" | "dark">({ key: 'color-scheme', defaultValue: 'light' });
 
 
 
   return (
-    <MantineProvider theme={{ colorScheme: theme }}>
-      <AppShell
-        // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
-        navbarOffsetBreakpoint="sm"
-        // fixed prop on AppShell will be automatically added to Header and Navbar
-        fixed
-        navbar={
-          <Navbar
-            padding="md"
-            // Breakpoint at which navbar will be hidden if hidden prop is true
-            hiddenBreakpoint="sm"
-            // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
-            hidden={!opened}
-            // when viewport size is less than theme.breakpoints.sm navbar width is 100%
-            // viewport size > theme.breakpoints.sm – width is 300px
-            // viewport size > theme.breakpoints.lg – width is 400px
-            width={{ sm: 300, lg: 400 }}
-          >
-            <Paper>
-              <Group position="center">
-                <EZDiv display={"flex"} flexDirection="column" rowGap={"15px"}>
-                  <Link href="/">
-                    <Button variant="outline">Home</Button>
-                  </Link>
-                  <Link href="/products">
-                    <Button variant="outline">Products</Button>
-                  </Link>
-                  <Link href="/contactus">
-                    <Button variant="outline">Contact Us</Button>
-                  </Link>
-                  <Link href="/aboutus">
-                    <Button variant="outline">About Us</Button>
-                  </Link>
-                </EZDiv>
-              </Group>
-            </Paper>
-          </Navbar>
-        }
-        header={
-          <Header height={70} padding="md">
-            {/* Handle other responsive styles with MediaQuery component or createStyles function */}
-            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-              <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
-                <Burger
-                  opened={opened}
-                  onClick={() => setOpened((o) => !o)}
-                  size="sm"
-                  // color={theme.colors.gray[6]}
-                  mr="xl"
-                />
-              </MediaQuery>
+    <AppShell
+      // navbarOffsetBreakpoint controls when navbar should no longer be offset with padding-left
+      navbarOffsetBreakpoint="sm"
+      // fixed prop on AppShell will be automatically added to Header and Navbar
+      fixed
+      navbar={
+        <Navbar
+          padding="md"
+          // Breakpoint at which navbar will be hidden if hidden prop is true
+          hiddenBreakpoint="sm"
+          // Hides navbar when viewport size is less than value specified in hiddenBreakpoint
+          hidden={!opened}
+          // when viewport size is less than theme.breakpoints.sm navbar width is 100%
+          // viewport size > theme.breakpoints.sm – width is 300px
+          // viewport size > theme.breakpoints.lg – width is 400px
+          width={{ sm: 300, lg: 400 }}
+        >
+          <Paper>
+            <Group position="center">
+              <EZDiv display={"flex"} flexDirection="column" rowGap={"15px"}>
+                <Link href="/">
+                  <Button component="a" variant="outline">Home</Button>
+                </Link>
+                <Link href="/products">
+                  <Button component="a" variant="outline">Products</Button>
+                </Link>
+                <Link href="/contactus">
+                  <Button component="a" variant="outline">Contact Us</Button>
+                </Link>
+                <Link href="/aboutus">
+                  <Button component="a" variant="outline">About Us</Button>
+                </Link>
+              </EZDiv>
+            </Group>
+          </Paper>
+        </Navbar>
+      }
+      header={
+        <Header height={70} padding="md">
+          {/* Handle other responsive styles with MediaQuery component or createStyles function */}
+          <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+            <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+              <Burger
+                opened={opened}
+                onClick={() => setOpened((o) => !o)}
+                size="sm"
+                // color={theme.colors.gray[6]}
+                mr="xl"
+              />
+            </MediaQuery>
 
-              <Text>Application header</Text>
-            </div>
-            <div>
-              <ActionIcon
-                style={buttonStyle}
-                onClick={()=>{setTheme(theme == "dark" ? "light" : "dark")}}
-              >
-                {theme == "dark" && <MdDarkMode />}
-                {theme == "light" && <MdOutlineDarkMode />}
-              </ActionIcon>
-            </div>
-          </Header>
-        }
-      >
-        <Paper>
-          {props.children}
-        </Paper>
-      </AppShell>
-    </MantineProvider>
+            <Text>Application header</Text>
+          </div>
+        </Header>
+      }
+    >
+      <Paper>
+        {props.children}
+      </Paper>
+    </AppShell>
   );
 }
 
