@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["extendedIndexes"]
 }
 
 datasource db {
@@ -8,8 +9,37 @@ datasource db {
 }
 
 model product {
-  rid_product  Int     @id @default(autoincrement())
-  rid_category Int?
-  productname  String? @db.Citext
-  cover_photo  Bytes?
+  rid_product       Int            @id @default(autoincrement())
+  rid_productdetail Int?
+  rid_category      Int?
+  productname       String?        @db.Citext
+  cover_photo       Bytes?
+  inactive          Boolean?
+  outofstock        Boolean?
+  price             Decimal?
+  description       String?
+  productdetail     productdetail? @relation(fields: [rid_productdetail], references: [rid_productdetail])
+  category          category?      @relation(fields: [rid_category], references: [rid_category])
+
+  @@index([inactive])
+}
+
+model productdetail {
+  rid_productdetail Int       @id @default(autoincrement())
+  detailphoto       Bytes?
+  description       String?
+  inactive          Boolean?
+  product           product[]
+}
+
+model category {
+  rid_category Int       @id @default(autoincrement())
+  categoryname String    @db.Citext
+  product      product[]
+}
+
+model productinterest {
+  rid_productinterest Int @id @default(autoincrement())
+  rid_product         Int
+  viewed              Int
 }
