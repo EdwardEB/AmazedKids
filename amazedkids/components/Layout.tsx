@@ -74,7 +74,7 @@ function Layout(props) {
               />
             </MediaQuery>
 
-            <Text>Application header</Text>
+            <Text>Amazed Kids</Text>
           </div>
         </Header>
       }

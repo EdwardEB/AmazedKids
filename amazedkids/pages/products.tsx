@@ -27,7 +27,7 @@ const Products = ({feed})=>{
     return (
       <div style={{...style, border : "solid 2px white"}}>
          <Card>{product?.productname}
-
+          {/* <Button onClick={()=>{window.href = 'www.google.co.za'}}>Click Me</Button> */}
          </Card>
         {/* <Card shadow="sm" padding="sm">
           <Card.Section>
@@ -67,7 +67,7 @@ const Products = ({feed})=>{
     >
       <AutoSizer defaultWidth={1920} defaultHeight={1080}>
         {({ width, height }) => {
-          const cardWidth = 350;
+          const cardWidth = 330;
           const cardHeight = 330;
           const columnCount = Math.floor(width / cardWidth);
           const rowCount = Math.ceil(feed.length / columnCount);
