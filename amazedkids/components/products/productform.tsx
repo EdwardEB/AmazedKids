@@ -1,8 +1,10 @@
-import React from "react";
-import {useForm, Controller} from "react-hook-form";
-import { PrismaClient, product } from "@prisma/client";
+import React, { useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { product } from "@prisma/client";
+import axios from "axios";
 
-import { Button,
+import {
+  Button,
   Group,
   Space,
   Text,
@@ -10,19 +12,21 @@ import { Button,
   TextInput,
   Textarea,
   Checkbox,
-  NumberInput} from "@mantine/core";
+  NumberInput,
+  InputWrapper
+} from "@mantine/core";
 
-  import Dropzone from '../DropZone';
+import Dropzone from '../DropZone';
+import { EZDiv } from "../EZDiv";
 
 interface iProductForm {
-  request : "insert" | "change" | "delete" | "select"
-  rid : number
-  open : boolean
-  closeForm : ()=>void
+  request: "insert" | "change" | "delete" | "select"
+  rid: number
+  open: boolean
+  closeForm: () => void
 }
 
-const productRecord : product = {
-  rid_product: 0,
+const productRecord: product = {
   rid_productdetail: null,
   rid_category: null,
   productname: "",
@@ -33,13 +37,28 @@ const productRecord : product = {
   description: ""
 }
 
-const ProductForm = (props : iProductForm) => {
-  const { register, handleSubmit, setValue, getValues ,reset, control, formState: { errors } }  = useForm(
+const ProductForm = (props: iProductForm) => {
+  const { register, handleSubmit, setValue, getValues, reset, control, formState: { errors } } = useForm(
     {
-      defaultValues : productRecord
+      defaultValues: productRecord
     }
   );
-  // console.log(prisma.product)
+
+  useEffect(()=>{
+    if (props.request == 'insert' && props.open == true) {
+      reset(productRecord);
+    }
+  }, [props.open])
+
+  const onSubmit = (data)=>{
+    if (props.request == "insert") {
+      axios.post('/api/product', data).then((res)=>{
+        if (res.statusText == "OK") {
+          props.closeForm();
+        }
+      })
+    }
+  }
 
   return (
     <>
@@ -58,7 +77,7 @@ const ProductForm = (props : iProductForm) => {
             </Button>
           </Group>
         </Modal>
-      :
+        :
         <Modal
           title="Update Product"
           opened={props.open}
@@ -69,22 +88,36 @@ const ProductForm = (props : iProductForm) => {
           centered={true}
         >
           <div>
-            <Checkbox
-              label="Inactive"
-              {...register('inactive')}
-            />
+            <EZDiv 
+              display={"flex"} 
+              flexDirection={"row"} 
+              alignItems={"flex-start"}
+              justifyContent={"space-between"}
+            >
+              <Checkbox
+                label="Inactive"
+                //@ts-ignore
+                {...register('inactive')}
+              />
+              <Checkbox
+                label="Out of stock"
+                //@ts-ignore
+                {...register('outofstock')}
+              />
+            </EZDiv>
 
-            <Space h={20} />
+            <Space h={10} />
 
             <TextInput
               name="productname"
               placeholder="Product Name"
               label="Product Name"
               required
+              //@ts-ignore
               {...register('productname')}
             />
 
-            <Space h={20} />
+            <Space h={10} />
 
             <Controller
               name="price"
@@ -94,29 +127,44 @@ const ProductForm = (props : iProductForm) => {
                   hideControls
                   label={"Price"}
                   precision={2}
+                  //@ts-ignore
                   value={field.value}
-                  onChange={(val)=>{
-                    setValue('price', val)
-                  }}
+                  onChange={field.onChange}
                 />
               )}
             />
 
-            <Space h={20} />
+            <Space h={10} />
 
+            <InputWrapper
+              label="Cover Photo"
+            >
             <Dropzone
               onDrop={(files) => console.log('accepted files', files)}
+              renderFunc={()=>
+                <div>Click or drop file here</div>}
             />
+            </InputWrapper>
 
-            <Space h={20} />
+            <Space h={10} />
             <Textarea
-              minRows={4}
+              minRows={3}
               label="Long Description"
-              maxRows={4}
+              maxRows={3}
               autosize
               {...register("description")}
             />
           </div>
+          <EZDiv 
+            display={"flex"} 
+            justifyContent={"flex-end"}
+            marginTop={"5px"}>
+            <Button 
+              variant="outline"
+              onClick={handleSubmit(onSubmit)}
+            >Submit
+            </Button>
+          </EZDiv>
         </Modal>
       }
     </>

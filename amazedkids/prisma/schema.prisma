@@ -16,7 +16,7 @@ model product {
   cover_photo       Bytes?
   inactive          Boolean?
   outofstock        Boolean?
-  price             Decimal?
+  price             Float?
   description       String?
   productdetail     productdetail? @relation(fields: [rid_productdetail], references: [rid_productdetail])
   category          category?      @relation(fields: [rid_category], references: [rid_category])

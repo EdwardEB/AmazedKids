@@ -4,7 +4,7 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import { Card, Group, Text, Image, Badge, Button, Grid } from "@mantine/core";
 
 
-const ProcuctCards = ({feed})=>{
+const ProcuctCards = ({ feed }) => {
 
   const Cell = ({ columnIndex, rowIndex, style, data }) => {
     const { feed, columnCount } = data;
@@ -12,10 +12,10 @@ const ProcuctCards = ({feed})=>{
     const product = feed[singleColumnIndex];
 
     return (
-      <div style={{...style, border : "solid 2px white"}}>
-         <Card>{product?.productname}
+      <div style={{ ...style, border: "solid 2px white" }}>
+        <Card>test{product?.productname}
 
-         </Card>
+        </Card>
         {/* <Card shadow="sm" padding="sm">
           <Card.Section>
             <Image src="" height={160} alt="Norway" />
@@ -44,11 +44,11 @@ const ProcuctCards = ({feed})=>{
   return (
     <div
       style={{
-        // minHeight: "100vh",
+        minHeight: "100vh",
         // backgroundColor: "#d6cae2",
         // marginTop: "2em",
         // position: "sticky",
-        // top: "0px",
+        top: "0px",
       }}
     >
       <AutoSizer defaultWidth={1920} defaultHeight={1080}>

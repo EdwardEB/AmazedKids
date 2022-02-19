@@ -7,11 +7,11 @@ import ProductForm from "../components/products/productform";
 import { GetStaticProps } from "next";
 import prisma from "../lib/prisma";
 import { Button } from "@mantine/core";
-import { TiPlus } from "react-icons/ti"
+import { TiPlus } from "react-icons/ti";
 
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.product.findMany({ where: { rid_product: { gt: 0, lt: 10 } } })
+  const feed = await prisma.product.findMany({ where: { inactive: false } })
   return {
     props: { feed },
     revalidate: 60,
@@ -19,6 +19,7 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 function Product({ feed }) {
+  console.log('feed', feed)
   const [request, setRequest] = useState<"insert" | "change" | "delete" | "select">("insert");
   const [open, setOpen] = useState(false);
   const [rid, setRid] = useState<number>(0);
