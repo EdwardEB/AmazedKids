@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { product } from "@prisma/client";
 import axios from "axios";
@@ -13,7 +13,8 @@ import {
   Textarea,
   Checkbox,
   NumberInput,
-  InputWrapper
+  InputWrapper,
+  LoadingOverlay
 } from "@mantine/core";
 
 import Dropzone from '../DropZone';
@@ -34,7 +35,18 @@ const productRecord: product = {
   inactive: false,
   outofstock: false,
   price: null,
-  description: ""
+  description: "",
+  filename : ""
+}
+
+const getBase64 = (file, pCallBack) => {
+  var reader = new FileReader();
+  reader.readAsBinaryString(file);
+
+  reader.onload = function () {
+    //@ts-ignore
+    pCallBack?.(btoa(reader.result));
+  }
 }
 
 const ProductForm = (props: iProductForm) => {
@@ -43,19 +55,50 @@ const ProductForm = (props: iProductForm) => {
       defaultValues: productRecord
     }
   );
+  const [visible, setVisible] = useState(false);
 
-  useEffect(()=>{
-    if (props.request == 'insert' && props.open == true) {
-      reset(productRecord);
+  useEffect(() => {
+    if (props.open == true){
+      if (props.request == 'insert') {
+        reset(productRecord);
+      }
+      if (props.request == 'change') {
+        axios.get(`api/product/${props.rid}`).then(
+          (res)=>{
+            if (res.statusText == "OK") {
+              reset(res.data)
+            } else {
+              reset(productRecord);
+            }
+          }
+        )
+      }
     }
   }, [props.open])
 
-  const onSubmit = (data)=>{
+  const onSubmit = (data) => {
     if (props.request == "insert") {
-      axios.post('/api/product', data).then((res)=>{
+      setVisible(true);
+      axios.post('/api/product', data).then((res) => {
         if (res.statusText == "OK") {
+          setVisible(false);
           props.closeForm();
         }
+      })
+    }
+  }
+
+  const fileDropChange = (FileArray) => {
+    if (FileArray.length > 0) {
+      //drop zone is no set to handle multiple files, so its safe so assume array will have only 1 file
+      getBase64(FileArray[0], (fileStr) => {
+        reset(
+          {
+            ...getValues(),
+            cover_photo: fileStr,
+            filename : FileArray[0].name
+          }
+        )
       })
     }
   }
@@ -88,9 +131,10 @@ const ProductForm = (props: iProductForm) => {
           centered={true}
         >
           <div>
-            <EZDiv 
-              display={"flex"} 
-              flexDirection={"row"} 
+            <LoadingOverlay visible={visible} />
+            <EZDiv
+              display={"flex"}
+              flexDirection={"row"}
               alignItems={"flex-start"}
               justifyContent={"space-between"}
             >
@@ -136,15 +180,22 @@ const ProductForm = (props: iProductForm) => {
 
             <Space h={10} />
 
-            <InputWrapper
-              label="Cover Photo"
-            >
-            <Dropzone
-              onDrop={(files) => console.log('accepted files', files)}
-              renderFunc={()=>
-                <div>Click or drop file here</div>}
+            <Controller
+              name="filename"
+              control={control}
+              render={({ field }) => (
+                <InputWrapper
+                  label="Cover Photo"
+                >
+                  <Dropzone
+                    onChange={fileDropChange}
+                    renderFunc={() =>
+                      <div>Click or drop file here</div>}
+                    value={field.value}
+                  />
+                </InputWrapper>
+              )}
             />
-            </InputWrapper>
 
             <Space h={10} />
             <Textarea
@@ -155,11 +206,11 @@ const ProductForm = (props: iProductForm) => {
               {...register("description")}
             />
           </div>
-          <EZDiv 
-            display={"flex"} 
+          <EZDiv
+            display={"flex"}
             justifyContent={"flex-end"}
             marginTop={"5px"}>
-            <Button 
+            <Button
               variant="outline"
               onClick={handleSubmit(onSubmit)}
             >Submit

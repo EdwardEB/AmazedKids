@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["extendedIndexes"]
 }
 
@@ -12,8 +12,9 @@ model product {
   rid_product       Int            @id @default(autoincrement())
   rid_productdetail Int?
   rid_category      Int?
-  productname       String?        @db.Citext
-  cover_photo       Bytes?
+  productname       String         @db.Citext
+  cover_photo       String?        @db.Citext
+  filename          String?        @db.Citext
   inactive          Boolean?
   outofstock        Boolean?
   price             Float?

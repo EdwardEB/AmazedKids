@@ -19,7 +19,6 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 function Product({ feed }) {
-  console.log('feed', feed)
   const [request, setRequest] = useState<"insert" | "change" | "delete" | "select">("insert");
   const [open, setOpen] = useState(false);
   const [rid, setRid] = useState<number>(0);
@@ -36,11 +35,6 @@ function Product({ feed }) {
         variant="default"
         onClick={insertRecord}
         leftIcon={<TiPlus size={14} />}
-        sx={(theme) => ({
-          backgroundColor: theme.colors.dark[7],
-          border: "none",
-
-        })}
         styles={{
           inner: { justifyContent: "flex-start" },
           rightIcon: { marginLeft: "auto" }
