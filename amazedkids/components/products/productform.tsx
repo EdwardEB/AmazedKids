@@ -27,6 +27,7 @@ interface iProductForm {
   closeForm: () => void
 }
 
+//@ts-ignore
 const productRecord: product = {
   rid_productdetail: null,
   rid_category: null,
