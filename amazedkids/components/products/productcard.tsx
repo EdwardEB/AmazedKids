@@ -8,7 +8,7 @@ const ProcuctCards = ({ feed }) => {
   const [request, setRequest] = useState<"insert" | "change" | "delete" | "select">("insert");
   const [open, setOpen] = useState(false);
   const [rid, setRid] = useState<number>(0);
-  
+
   const Cell = ({ columnIndex, rowIndex, style, data }) => {
     const { feed, columnCount } = data;
     const singleColumnIndex = columnIndex + rowIndex * columnCount;
@@ -18,17 +18,17 @@ const ProcuctCards = ({ feed }) => {
       <>
       {product &&
       <div style={{ ...style, border: "solid 2px white" }}>
-        
+
         <Card>
           <Card.Section>
-            <Image 
-              src={`data:image/jpeg;base64,${product.cover_photo}`} 
-              height={160} 
+            <Image
+              src={`data:image/jpeg;base64,${product.cover_photo}`}
+              height={160}
               alt={product.filename} />
           </Card.Section>
           <Text size="sm" style={{ color: "primary", lineHeight: 1.5 }}>
             {product.description}
-          </Text>    
+          </Text>
           <Group position="apart" style={{ marginBottom: 5 }}>
             <Text weight={500}>{product.productname}</Text>
             {product.outofstock ?
@@ -36,10 +36,10 @@ const ProcuctCards = ({ feed }) => {
             :
               <Badge color="pink" variant="light">{`R ${product.price}`}</Badge>
             }
-          </Group>      
-          {/* <Button 
+          </Group>
+          <Button
             variant="light"
-            color="blue" 
+            color="blue"
             fullWidth
             style={{ marginTop: 14 }}
             onClick={()=>{
@@ -48,9 +48,9 @@ const ProcuctCards = ({ feed }) => {
               setOpen(true);
             }}>
             Edit Product
-          </Button> */}
+          </Button>
         </Card>
-        
+
         {/* <Card shadow="sm" padding="sm">
           <Card.Section>
             <Image src="" height={160} alt="Norway" />

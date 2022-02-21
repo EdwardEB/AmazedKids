@@ -63,10 +63,12 @@ const ProductForm = (props: iProductForm) => {
         reset(productRecord);
       }
       if (props.request == 'change') {
+        setVisible(true);
         axios.get(`api/product/${props.rid}`).then(
           (res)=>{
             if (res.statusText == "OK") {
-              reset(res.data)
+              reset(res.data);
+              setVisible(false);
             } else {
               reset(productRecord);
             }

@@ -52,9 +52,9 @@ const DropZone = (props: iDropZone) => {
         <Dropzone
           loading={loading}
           onDrop={(fileArray) => props.onChange?.(fileArray)}
-          maxSize={props.maxSize ? props.maxSize : 10 * 1024 ** 2}
+          maxSize={props.maxSize ? props.maxSize : 20 * 1024 ** 2}
           multiple={props.multiple ? props.multiple : false}
-          onReject={(files) => alert('File is too big, or incorrect format. File cannot exceed 10mb')}
+          onReject={(files) => alert('File is too big, or incorrect format. File cannot exceed 20mb')}
           style={props.style}
         >
           {props.renderFunc ? props.renderFunc :
