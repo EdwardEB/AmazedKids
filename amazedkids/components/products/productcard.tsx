@@ -49,6 +49,18 @@ const ProcuctCards = ({ feed }) => {
             }}>
             Edit Product
           </Button>
+          <Button
+            variant="light"
+            color="red"
+            fullWidth
+            style={{ marginTop: 14 }}
+            onClick={()=>{
+              setRid(product.rid_product);
+              setRequest('delete');
+              setOpen(true);
+            }}>
+            Delete Product
+          </Button>
         </Card>
 
         {/* <Card shadow="sm" padding="sm">

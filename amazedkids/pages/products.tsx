@@ -7,11 +7,11 @@ import ProductForm from "../components/products/productform";
 import { GetStaticProps } from "next";
 import prisma from "../lib/prisma";
 import { Button } from "@mantine/core";
-import { TiPlus } from "react-icons/ti";
+import { TiPlus, TiMinus } from "react-icons/ti";
 
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feed = await prisma.product.findMany({ where: { inactive: false } })
+  const feed = await prisma.product.findMany({take : 10, where: { inactive: false } })
   return {
     props: { feed },
     revalidate: 60,
@@ -27,6 +27,11 @@ function Product({ feed }) {
     setRequest("insert");
     setOpen(true);
   },[])
+  
+  const deleteRecord = useCallback(()=>{
+    setRequest("delete");
+    setOpen(true);
+  },[])  
 
   return (
     <Layout>

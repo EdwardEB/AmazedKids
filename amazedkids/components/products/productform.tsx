@@ -56,7 +56,7 @@ const ProductForm = (props: iProductForm) => {
       defaultValues: productRecord
     }
   );
-  const [visible, setVisible] = useState(false);
+  const [loadVisible, setLoadVisible] = useState(false);
 
   useEffect(() => {
     if (props.open == true){
@@ -64,12 +64,12 @@ const ProductForm = (props: iProductForm) => {
         reset(productRecord);
       }
       if (props.request == 'change') {
-        setVisible(true);
+        setLoadVisible(true);
         axios.get(`api/product/${props.rid}`).then(
           (res)=>{
             if (res.statusText == "OK") {
               reset(res.data);
-              setVisible(false);
+              setLoadVisible(false);
             } else {
               reset(productRecord);
             }
@@ -81,10 +81,24 @@ const ProductForm = (props: iProductForm) => {
 
   const onSubmit = (data) => {
     if (props.request == "insert") {
-      setVisible(true);
+      setLoadVisible(true);
       axios.post('/api/product', data).then((res) => {
         if (res.statusText == "OK") {
-          setVisible(false);
+          setLoadVisible(false);
+          props.closeForm();
+        }
+      })
+    } else if (props.request == "change") {
+      axios.post(`/api/product/${props.rid}`, data).then((res) => {
+        if (res.statusText == "OK") {
+          setLoadVisible(false);
+          props.closeForm();
+        }
+      })
+    } else if (props.request == "delete") {
+      axios.delete(`/api/product/${props.rid}`, data).then((res) => {
+        if (res.statusText == "OK") {
+          setLoadVisible(false);
           props.closeForm();
         }
       })
@@ -119,7 +133,7 @@ const ProductForm = (props: iProductForm) => {
           <Space h={20} />
           <Group position="right">
             <Button onClick={() => { props.closeForm() }}>Cancel</Button>
-            <Button color="red" onClick={() => { }}>Delete
+            <Button color="red" onClick={handleSubmit(onSubmit)}>Delete
             </Button>
           </Group>
         </Modal>
@@ -134,7 +148,7 @@ const ProductForm = (props: iProductForm) => {
           centered={true}
         >
           <div>
-            <LoadingOverlay visible={visible} />
+            <LoadingOverlay visible={loadVisible} />
             <EZDiv
               display={"flex"}
               flexDirection={"row"}
